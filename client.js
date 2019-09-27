@@ -2,8 +2,6 @@ const socket = io("http://localhost:3000");
 const sendButton = document.getElementById("send-button");
 const msgInput = document.getElementById("msg-input");
 const msgContainer = document.getElementById('msg-container');
-const SHA256 = require('crypto-js/sha256');
-
 
 appendMsg = (msg) => {
     const msgEle = document.createElement('div');
@@ -13,15 +11,10 @@ appendMsg = (msg) => {
     return msgContainer;
 }
 
-var current_date = (new Date()).valueOf().toString();
-var random = Math.random().toString();
-calculateHash = () => {
-    return SHA256(current_date + random).toString();
-}
+
 
 appendMsg('you joined');
-let name = calculateHash();
-socket.emit('new-user',name);
+socket.emit('new-user');
 socket.on('user-connected', name => {
     console.log(name)
     appendMsg(`${name} connected`);
