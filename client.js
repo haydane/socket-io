@@ -16,7 +16,6 @@ appendMsg = (msg) => {
 appendMsg('you joined');
 socket.emit('new-user');
 socket.on('user-connected', name => {
-    console.log(name)
     appendMsg(`${name} connected`);
 }) 
 
@@ -30,6 +29,7 @@ sendButton.addEventListener('click', e => {
 
 socket.on('chat-message', data => {
     appendMsg(`${data.name}: ${data.msg}`);
+   
 });
 
 socket.on('user-disconnected', name => {
