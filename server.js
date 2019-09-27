@@ -20,4 +20,8 @@ io.on('connection', socket => {
         socket.broadcast.emit('user-disconnected',users[socket.id]);
         delete users[socket.id];
     })
+    socket.on('user-typing', name => {
+        socket.broadcast.emit('typing', name);
+        console.log(`${name} is typing`);
+    })
 });

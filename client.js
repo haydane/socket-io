@@ -37,5 +37,11 @@ socket.on('user-disconnected', name => {
     appendMsg(`${name} disconnected`);
 })
 
+msgInput.addEventListener('keypress', () => {
+    socket.emit('user-typing',name);
+});
 
+// socket.on('typing', name => {
+//     appendMsg(`${name} is typing`)
+// })
 
