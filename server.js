@@ -3,6 +3,7 @@ const SHA256 = require('crypto-js/sha256');
 const express = require('express');
 const app = express();
 const path = require('path');
+const uuidV1 = require('uuid/v1');
 
 calculateHash = () => {
     let current_date = (new Date()).valueOf().toString();
@@ -13,7 +14,7 @@ const users = {};
 io.on('connection', socket => {
     
     socket.on('new-user', () => {
-        users[socket.id] = calculateHash();
+        users[socket.id] = uuidV1();
         socket.broadcast.emit('user-connected',users[socket.id]);
         console.log(`${users[socket.id]} connected`);
     });
