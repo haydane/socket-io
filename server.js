@@ -1,5 +1,8 @@
 const io = require('socket.io')(3000);
 const SHA256 = require('crypto-js/sha256');
+const express = require('express');
+const app = express();
+const path = require('path');
 
 calculateHash = () => {
     let current_date = (new Date()).valueOf().toString();
@@ -30,3 +33,12 @@ io.on('connection', socket => {
         // console.log(`${name} is typing`);
     })
 });
+
+app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css/')));
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js/')));
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname ,'./index.html'));
+})
+
+app.listen(3001, () => console.log("app is listening on port 3001"));
