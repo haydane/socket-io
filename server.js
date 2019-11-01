@@ -19,7 +19,7 @@ io.on('connection', socket => {
     setInterval(() => {
         i = i++ === 10 ? 0: i;
         socket.emit("testing",i.toString());
-    }, 2000);
+    }, 1000);
 
     socket.on('new-user', () => {
         users[socket.id] = uuidV1();
@@ -34,6 +34,7 @@ io.on('connection', socket => {
     });
     socket.on('disconnect', () => {
         socket.broadcast.emit('user-disconnected',users[socket.id]);
+        // console.log(`${users[socket.id]} disconnected`);
         console.log(`${users[socket.id]} disconnected`);
         delete users[socket.id];
     })
