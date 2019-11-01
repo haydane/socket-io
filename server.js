@@ -11,8 +11,16 @@ calculateHash = () => {
     return SHA256(current_date + random).toString();
 }
 const users = {};
+count = 0;
 io.on('connection', socket => {
-    
+    console.log('new user');
+    let i = 0;
+
+    setInterval(() => {
+        i = i++ === 10 ? 0: i;
+        socket.emit("testing",i.toString());
+    }, 2000);
+
     socket.on('new-user', () => {
         users[socket.id] = uuidV1();
         socket.broadcast.emit('user-connected',users[socket.id]);
@@ -33,6 +41,7 @@ io.on('connection', socket => {
         socket.broadcast.emit('typing', name);
         // console.log(`${name} is typing`);
     })
+
 });
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -42,4 +51,4 @@ app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname ,'./index.html'));
 })
 
-app.listen(3000, () => console.log("app is listening on port 3000"));
+app.listen(3001, () => console.log("app is listening on port 3001"));
